@@ -1,0 +1,23 @@
+#!/bin/bash
+target="${1%%.*}"
+
+echo "De-crypting content..."
+openssl enc -d  -aes-256-cbc -in $1 -out $target.tgz.tmp
+echo "De-crypting content...done"
+
+echo "Un-packaging content..."
+tar xvfz $target.tgz.tmp $target
+echo "Un-packaging content...done"
+
+rm $target.tgz.tmp
+
+#read -p "Should the encrypted files be deleted [y,n]? " -n 1 -r
+#echo    # (optional) move to a new line
+#if [[ $REPLY =~ ^[Yy]$ ]]
+#then
+#echo "Removing encrypted file..."
+#rm -Rf $1
+#echo "Removing encrypted file...done"
+#else
+#echo "SKIPPING Remove of encrypted files !!!"
+#fi

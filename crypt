@@ -1,0 +1,21 @@
+#!/bin/bash
+echo "Packaging content..."
+target=${1%/}
+tar cfz $target.tgz.tmp $1
+echo "Packaging content...done"
+
+echo "Crypting content..."
+openssl enc    -aes-256-cbc -salt -in $target.tgz.tmp -out $target.enc
+rm $target.tgz.tmp
+echo "Crypting content...done"
+
+read -p "Should the unencrypted files be deleted [y,n]? " -n 1 -r
+echo    # (optional) move to a new line
+if [[ $REPLY =~ ^[Yy]$ ]]
+then
+echo "Removing unencrypted files..."
+rm -Rf $1
+echo "Removing unencrypted files...done"
+else
+echo "SKIPPING Remove of unencrypted files !!!"
+fi
