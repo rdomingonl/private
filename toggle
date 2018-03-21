@@ -1,0 +1,15 @@
+#!/bin/bash
+DIRECTORY=$1
+if [ -z "$DIRECTORY" ]
+then
+  echo "specify dir"
+else 
+  if [[ -d "$DIRECTORY" && $DIRECTORY != *".enc"* ]]
+  then
+  echo "crypt"
+  source ./crypt $DIRECTORY
+  else
+  echo "decrypt"
+  source ./decrypt $DIRECTORY
+  fi
+fi
